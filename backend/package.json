@@ -1,0 +1,40 @@
+{
+    "name": "youfarm-backend",
+    "version": "1.0.0",
+    "description": "This handle youFarm backend build on NodeJs, Express and MongoDB",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BuildForSDG/youFarm.git"
+    },
+    "keywords": ["farming", "farmer", "local", "sdg", "crops", "plants"],
+    "engines": {
+        "node": "10.16.3"
+    },
+    "dependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.18.3",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "ejs": "^3.0.1",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.5.2",
+        "regenerator-runtime": "^0.13.5"
+    },
+    "devDependencies": {
+        "babel-preset-env": "^1.7.0",
+        "nodemon": "^2.0.3"
+    },
+    "author": "SDG Team 233",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/BuildForSDG/youFarm/issues"
+    },
+    "homepage": "https://github.com/BuildForSDG/youFarm#readme"
+}
