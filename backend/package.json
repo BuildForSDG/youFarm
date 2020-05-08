@@ -10,13 +10,21 @@
         "type": "git",
         "url": "git+https://github.com/BuildForSDG/youFarm.git"
     },
-    "keywords": ["farming", "farmer", "local", "sdg", "crops", "plants"],
+    "keywords": [
+        "farming",
+        "farmer",
+        "local",
+        "sdg",
+        "crops",
+        "plants"
+    ],
     "engines": {
         "node": "10.16.3"
     },
     "dependencies": {
         "babel-cli": "^6.26.0",
         "babel-core": "^6.26.3",
+        "babel-register": "^6.26.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "cors": "^2.8.5",

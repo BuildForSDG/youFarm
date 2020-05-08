@@ -19,16 +19,16 @@ module.exports = (app) => {
 
     //admins
     app.post(endpoint + 'admin/login', adminCtrl.login);
-    app.get(endpoint + 'admins', isAdminLoggedIn, adminCtrl.allAdmins);
+    app.get(endpoint +'admins', isAdminLoggedIn, adminCtrl.allAdmins);
     app.post(endpoint + 'admin/add', isAdminLoggedIn, adminCtrl.add);
     app.delete(endpoint + 'admin/delete/:admin_id', isAdminLoggedIn, adminCtrl.delete);
-    app.put(endpoint + 'admin/update/profile', isAdminLoggedIn, adminCtrl.updateAdminProfile);
-    app.delete(endpoint + 'user/delete/:user_id', isAdminLoggedIn, adminCtrl.deleteUser);
-    app.get(endpoint + 'users', isAdminLoggedIn, adminCtrl.allUsers);
+    app.put(endpoint +  'admin/update/profile', isAdminLoggedIn, adminCtrl.updateAdminProfile);
+    app.delete(endpoint +  + 'user/delete/:user_id', isAdminLoggedIn, adminCtrl.deleteUser);
+    app.get(endpoint +  'users', isAdminLoggedIn, adminCtrl.allUsers);
     app.get(endpoint + 'user/:user_id', isAdminLoggedIn, adminCtrl.userDetailsById);
 
     //users
     app.post(endpoint + 'login', userCtrl.login);
-    app.post(endpoint + 'register', userCtrl.register);
-    app.put(endpoint + 'user/update/profile', isUserLoggedIn, userCtrl.updateUserProfile);
+    app.post(endpoint +  'register', userCtrl.register);
+    app.put(endpoint +  'user/update/profile', isUserLoggedIn, userCtrl.updateUserProfile);
 };

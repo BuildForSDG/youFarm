@@ -1,10 +1,9 @@
 require('babel-register')({
-    presets: ['env']
+    presets: ["env"]
 });
 
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
@@ -22,8 +21,8 @@ app.use(function(req, res, next) {
 app.set('port', process.env.PORT || 4000);
 app.set('mongoURI', process.env.MONGODB_URI);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded());
 app.use('/public', express.static('public'));
 
 require('./api/routes')(app);
