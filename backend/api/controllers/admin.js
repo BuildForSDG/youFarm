@@ -113,6 +113,7 @@ class AdminClass {
                         status: true,
                         message: 'Admin successfully added.',
                         data: details
+                        
                     });
                 })
                 .catch((err) => {

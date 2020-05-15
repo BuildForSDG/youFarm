@@ -26,7 +26,6 @@
         "babel-core": "^6.26.3",
         "babel-register": "^6.26.0",
         "bcryptjs": "^2.4.3",
-        "body-parser": "^1.18.3",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "ejs": "^3.0.1",
