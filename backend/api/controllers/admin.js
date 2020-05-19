@@ -1,6 +1,11 @@
 import Admin from '../models/admin';
 import User from '../models/user';
-import { trimString, isEmpty, currentTimestamp, decodeJWToken } from '../utils/helper';
+import {
+    trimString,
+    isEmpty,
+    currentTimestamp,
+    decodeJWToken
+} from '../utils/helper';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -9,21 +14,24 @@ dotenv.config();
 class AdminClass {
     async login(req, res) {
         try {
-            let { email, password } = req.body;
+            let {
+                email,
+                password
+            } = req.body;
             const data = await Admin.findOne({
                 email: email
             });
 
             if (!data)
-                return res.status(404).json({
+                return res.status(200).json({
                     status: false,
                     message: 'Admin details does not exists'
                 });
 
             let adminDetails = {
                 id: data._id,
-                firstname: data.firstname,
-                lastname: data.lastname,
+                first_name: data.first_name,
+                last_name: data.last_name,
                 email: data.email,
                 created_at: data.created_at,
                 updated_at: data.updated_at
@@ -38,7 +46,9 @@ class AdminClass {
                 });
 
             //set jwt token
-            const payload = { admin: data._id };
+            const payload = {
+                admin: data._id
+            };
             const options = {
                 expiresIn: process.env.JWT_MAX_AGE,
                 algorithm: process.env.JWT_ALGORITHM
@@ -62,9 +72,18 @@ class AdminClass {
 
     async add(req, res) {
         try {
-            let { first_name, last_name, email, password, password_confirmation } = req.body;
+            let {
+                first_name,
+                last_name,
+                email,
+                password,
+                password_confirmation
+            } = req.body;
             const created_at = currentTimestamp();
-            let { email_exists, password_match } = false;
+            let {
+                email_exists,
+                password_match
+            } = false;
 
             const requiredValues = [first_name, last_name, email, password, password_confirmation];
             const isValueEmpty = isEmpty(requiredValues);
@@ -75,7 +94,11 @@ class AdminClass {
                     message: 'Please fill all fields.'
                 });
 
-            const check_email = await Admin.findOne({ email: trimString(email.toLowerCase()) }, { email: 1 });
+            const check_email = await Admin.findOne({
+                email: trimString(email.toLowerCase())
+            }, {
+                email: 1
+            });
 
             password_match = password != password_confirmation ? false : true;
             email_exists = check_email ? true : false;
@@ -108,7 +131,11 @@ class AdminClass {
             newAdmin
                 .save()
                 .then(async(data) => {
-                    const details = await Admin.findOne({ _id: data._id }, { password: 0 });
+                    const details = await Admin.findOne({
+                        _id: data._id
+                    }, {
+                        password: 0
+                    });
                     res.status(201).json({
                         status: true,
                         message: 'Admin successfully added.',
@@ -133,7 +160,15 @@ class AdminClass {
         try {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
             const logged_admin = decodeJWToken(token, 'admin');
-            const admins = await Admin.find({ _id: { $ne: logged_admin } }, { password: 0 }).sort({ _id: -1 });
+            const admins = await Admin.find({
+                _id: {
+                    $ne: logged_admin
+                }
+            }, {
+                password: 0
+            }).sort({
+                _id: -1
+            });
 
             if (admins.length > 0) {
                 return res.status(200).json({
@@ -158,8 +193,12 @@ class AdminClass {
         try {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
             const logged_admin = decodeJWToken(token, 'admin');
-            const { admin_id } = req.params;
-            let { admin_exists } = false;
+            const {
+                admin_id
+            } = req.params;
+            let {
+                admin_exists
+            } = false;
 
             if (!admin_id)
                 return res.status(404).json({
@@ -175,7 +214,9 @@ class AdminClass {
                     message: 'You cannot delete your account.'
                 });
 
-            const check_admin = await Admin.findOne({ _id: admin_id });
+            const check_admin = await Admin.findOne({
+                _id: admin_id
+            });
             admin_exists = check_admin ? true : false;
 
             if (!admin_exists)
@@ -210,7 +251,10 @@ class AdminClass {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
             const logged_admin = decodeJWToken(token, 'admin');
 
-            let { first_name, last_name } = req.body;
+            let {
+                first_name,
+                last_name
+            } = req.body;
 
             const allValues = [first_name, last_name];
             const isValueEmpty = isEmpty(allValues);
@@ -249,8 +293,12 @@ class AdminClass {
 
     async userDetailsById(req, res) {
         try {
-            const { user_id } = req.params;
-            let { user_exists } = false;
+            const {
+                user_id
+            } = req.params;
+            let {
+                user_exists
+            } = false;
 
             if (!user_id)
                 return res.status(404).json({
@@ -258,7 +306,9 @@ class AdminClass {
                     message: 'User details does not exists.'
                 });
 
-            const user = await User.findOne({ _id: user_id });
+            const user = await User.findOne({
+                _id: user_id
+            });
             user_exists = user ? true : false;
 
             if (!user_exists)
@@ -295,7 +345,9 @@ class AdminClass {
 
     async allUsers(req, res) {
         try {
-            const users = await User.find({}).sort({ _id: -1 });
+            const users = await User.find({}).sort({
+                _id: -1
+            });
 
             if (users.length > 0) {
                 return res.status(200).json({
@@ -318,8 +370,12 @@ class AdminClass {
 
     async deleteUser(req, res) {
         try {
-            const { user_id } = req.params;
-            let { user_exists } = false;
+            const {
+                user_id
+            } = req.params;
+            let {
+                user_exists
+            } = false;
 
             if (!user_id)
                 return res.status(404).json({
@@ -327,7 +383,9 @@ class AdminClass {
                     message: 'User details does not exists.'
                 });
 
-            const check_user = await User.findOne({ _id: user_id });
+            const check_user = await User.findOne({
+                _id: user_id
+            });
             user_exists = check_user ? true : false;
 
             if (!user_exists)

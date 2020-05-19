@@ -1,14 +1,19 @@
 import 'regenerator-runtime/runtime';
 
-import { isAdminLoggedIn, isUserLoggedIn } from './../utils/auth';
+import {
+    isAdminLoggedIn,
+    isUserLoggedIn
+} from './../utils/auth';
 import Admin from './../controllers/admin';
 import User from './../controllers/user';
+import Article from './../controllers/article';
 
 import dotenv from 'dotenv';
 dotenv.config();
 
 const adminCtrl = new Admin();
 const userCtrl = new User();
+const articleCtrl = new Article()
 
 const endpoint = process.env.ENDPOINT;
 
@@ -31,4 +36,10 @@ module.exports = (app) => {
     app.post(endpoint + 'login', userCtrl.login);
     app.post(endpoint + 'register', userCtrl.register);
     app.put(endpoint + 'user/update/profile', isUserLoggedIn, userCtrl.updateUserProfile);
+
+    //articles
+    app.post(endpoint + 'article/add', isAdminLoggedIn, articleCtrl.add);
+    app.get(endpoint + 'articles', articleCtrl.allArticles)
+    app.put(endpoint + 'article/update/:article_id', isAdminLoggedIn, articleCtrl.update);
+    app.delete(endpoint + 'article/delete/:article_id', isAdminLoggedIn, articleCtrl.delete);
 };

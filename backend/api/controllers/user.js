@@ -1,5 +1,10 @@
 import User from '../models/user';
-import { trimString, isEmpty, currentTimestamp, decodeJWToken } from '../utils/helper';
+import {
+    trimString,
+    isEmpty,
+    currentTimestamp,
+    decodeJWToken
+} from '../utils/helper';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -8,21 +13,24 @@ dotenv.config();
 class UserClass {
     async login(req, res) {
         try {
-            let { email, password } = req.body;
+            let {
+                email,
+                password
+            } = req.body;
             const data = await User.findOne({
                 email: email
             });
 
             if (!data)
-                return res.status(404).json({
+                return res.status(200).json({
                     status: false,
                     message: 'User details does not exists'
                 });
 
             let userDetails = {
                 id: data._id,
-                firstname: data.firstname,
-                lastname: data.lastname,
+                first_name: data.first_name,
+                last_name: data.last_name,
                 email: data.email,
                 phone: data.phone,
                 gender: data.gender,
@@ -41,8 +49,9 @@ class UserClass {
                     message: 'Incorrect login details.'
                 });
 
-            //set jwt token
-            const payload = { user: data._id };
+            const payload = {
+                user: data._id
+            };
             const options = {
                 expiresIn: process.env.JWT_MAX_AGE,
                 algorithm: process.env.JWT_ALGORITHM
@@ -79,7 +88,11 @@ class UserClass {
                 password_confirmation
             } = req.body;
             const created_at = currentTimestamp();
-            let { email_exists, phone_exists, password_match } = false;
+            let {
+                email_exists,
+                phone_exists,
+                password_match
+            } = false;
 
             const requiredValues = [first_name, last_name, email, phone, password, password_confirmation];
             const isValueEmpty = isEmpty(requiredValues);
@@ -90,8 +103,16 @@ class UserClass {
                     message: 'Please fill all fields.'
                 });
 
-            const check_email = await User.findOne({ email: trimString(email.toLowerCase()) }, { email: 1 });
-            const check_phone = await User.findOne({ phone: phone }, { phone: 1 });
+            const check_email = await User.findOne({
+                email: trimString(email.toLowerCase())
+            }, {
+                email: 1
+            });
+            const check_phone = await User.findOne({
+                phone: phone
+            }, {
+                phone: 1
+            });
 
             password_match = password != password_confirmation ? false : true;
             email_exists = check_email ? true : false;
@@ -136,7 +157,11 @@ class UserClass {
             newUser
                 .save()
                 .then(async(data) => {
-                    const details = await User.findOne({ _id: data._id }, { password: 0 });
+                    const details = await User.findOne({
+                        _id: data._id
+                    }, {
+                        password: 0
+                    });
                     res.status(201).json({
                         status: true,
                         message: 'User successfully added.',
@@ -162,8 +187,18 @@ class UserClass {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
             const logged_user = decodeJWToken(token, 'user');
 
-            let { first_name, last_name, phone, gender, state, city, address } = req.body;
-            let { phone_exists } = false;
+            let {
+                first_name,
+                last_name,
+                phone,
+                gender,
+                state,
+                city,
+                address
+            } = req.body;
+            let {
+                phone_exists
+            } = false;
 
             const allValues = [first_name, last_name, phone, gender, state, city, address];
             const isValueEmpty = isEmpty(allValues);
@@ -174,7 +209,15 @@ class UserClass {
                     message: 'Please fill all fields'
                 });
 
-            const check_phone = await User.findOne({ phone: trimString(phone), deleted: false, _id: { $ne: logged_user } }, { phone: 1 });
+            const check_phone = await User.findOne({
+                phone: trimString(phone),
+                deleted: false,
+                _id: {
+                    $ne: logged_user
+                }
+            }, {
+                phone: 1
+            });
             phone_exists = check_phone ? true : false;
 
             if (phone_exists)
@@ -186,7 +229,7 @@ class UserClass {
             User.findByIdAndUpdate(logged_user, {
                     $set: {
                         first_name: first_name,
-                        last_name: first_name,
+                        last_name: last_name,
                         phone: phone,
                         gender: gender,
                         state: state,
