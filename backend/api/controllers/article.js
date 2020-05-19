@@ -202,6 +202,62 @@ class ArticleClass {
         }
     }
 
+    async articleDetailsById(req, res) {
+        try {
+            const {
+                article_id
+            } = req.params;
+            let {
+                article_exists
+            } = false;
+
+            if (!article_id)
+                return res.status(404).json({
+                    status: false,
+                    message: 'Article does not exists.'
+                });
+
+            const article = await Article.findOne({
+                _id: article_id
+            });
+            article_exists = article ? true : false;
+
+            if (!article_exists)
+                return res.status(200).json({
+                    status: false,
+                    message: 'Article does not exists.'
+                });
+
+            const publisher = await Admin.findOne({
+                _id: article.publisher_id
+            }, {
+                password: 0
+            })
+
+            let details = {
+                _id: article._id,
+                title: article.title,
+                body: article.body,
+                image_url: article.image_url,
+                category: article.category,
+                published: article.published,
+                created_at: article.created_at,
+                updated_at: article.updated_at,
+                publisher: publisher
+            };
+
+            return res.status(200).json({
+                status: true,
+                data: details
+            });
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'Article details was not retrieved. Try again.'
+            });
+        }
+    }
+
     async delete(req, res) {
         try {
             const {

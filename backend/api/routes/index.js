@@ -42,4 +42,5 @@ module.exports = (app) => {
     app.get(endpoint + 'articles', articleCtrl.allArticles)
     app.put(endpoint + 'article/update/:article_id', isAdminLoggedIn, articleCtrl.update);
     app.delete(endpoint + 'article/delete/:article_id', isAdminLoggedIn, articleCtrl.delete);
+    app.get(endpoint + 'article/:article_id', articleCtrl.articleDetailsById);
 };
