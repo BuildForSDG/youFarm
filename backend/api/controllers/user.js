@@ -147,6 +147,7 @@ class UserClass {
                 state: state,
                 city: city,
                 address: address,
+                isSupplier: false,
                 password: bcrypt.hashSync(password, salt),
                 created_at,
                 updated_at: created_at
@@ -177,7 +178,7 @@ class UserClass {
         } catch (error) {
             res.status(500).json({
                 status: false,
-                message: 'An error occured. Unable to add user. Try again.' + error
+                message: 'An error occured. Unable to add user. Try again.'
             });
         }
     }
@@ -253,6 +254,131 @@ class UserClass {
             res.status(500).json({
                 status: false,
                 message: 'Your profile was not updated. Try again.'
+            });
+        }
+    }
+
+    async userDetailsById(req, res) {
+        try {
+            const {
+                user_id
+            } = req.params;
+            let {
+                user_exists
+            } = false;
+
+            if (!user_id)
+                return res.status(404).json({
+                    status: false,
+                    message: 'User details does not exists.'
+                });
+
+            const user = await User.findOne({
+                _id: user_id
+            });
+            user_exists = user ? true : false;
+
+            if (!user_exists)
+                return res.status(200).json({
+                    status: false,
+                    message: 'User details does not exists.'
+                });
+
+            let details = {
+                id: user._id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                phone: user.phone,
+                gender: user.gender,
+                state: user.state,
+                city: user.city,
+                address: user.address,
+                isSupplier: user.isSupplier,
+                created_at: user.created_at,
+                updated_at: user.updated_at
+            };
+
+            return res.status(200).json({
+                status: true,
+                data: details
+            });
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'User details was not retrieved. Try again.'
+            });
+        }
+    }
+
+    async allUsers(req, res) {
+        try {
+            const users = await User.find({}).sort({
+                _id: -1
+            });
+
+            if (users.length > 0) {
+                return res.status(200).json({
+                    status: true,
+                    data: users
+                });
+            } else {
+                return res.status(200).json({
+                    status: false,
+                    message: 'No user yet.'
+                });
+            }
+        } catch (error) {
+            return res.status(500).json({
+                status: false,
+                message: 'Unable to retrieve all users.'
+            });
+        }
+    }
+
+    async deleteUser(req, res) {
+        try {
+            const {
+                user_id
+            } = req.params;
+            let {
+                user_exists
+            } = false;
+
+            if (!user_id)
+                return res.status(404).json({
+                    status: false,
+                    message: 'User details does not exists.'
+                });
+
+            const check_user = await User.findOne({
+                _id: user_id
+            });
+            user_exists = check_user ? true : false;
+
+            if (!user_exists)
+                return res.status(200).json({
+                    status: false,
+                    message: 'User details does not exists.'
+                });
+
+            User.findByIdAndDelete(user_id)
+                .then((data) => {
+                    res.status(201).json({
+                        status: true,
+                        message: 'User successfully deleted.'
+                    });
+                })
+                .catch((error) => {
+                    res.status(500).json({
+                        status: false,
+                        message: 'An error occured. Unable to delete user. Try again.'
+                    });
+                });
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: 'An error occured. Unable to delete user. Try again.'
             });
         }
     }
