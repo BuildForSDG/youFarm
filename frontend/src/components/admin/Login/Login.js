@@ -16,6 +16,56 @@ import {
 import logo from "../../../assets/img/brand/youFarm-admin.png";
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      loading: false,
+    };
+
+    this.login = this.login.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+  }
+
+  changeHandler(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  login(e) {
+    this.setState((prevState) => ({
+      loading: !prevState.loading,
+    }));
+
+    const loginPayload = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+    e.preventDefault();
+    UserServices.login(loginPayload).then((response) => {
+      if (response.status === true) {
+        this.props.history.push("/user/dashboard");
+        localStorage.setItem("access-token", response.token);
+        localStorage.setItem("isUser", true);
+        toast.success(response.message, {
+          autoClose: 2000,
+          hideProgressBar: true,
+        });
+      } else {
+        this.setState((prevState) => ({
+          loading: !prevState.loading,
+        }));
+        toast.error(response.message, {
+          autoClose: 2000,
+          hideProgressBar: true,
+        });
+      }
+    });
+  }
   render() {
     return (
       <div

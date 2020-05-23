@@ -3,7 +3,7 @@ import axios from "axios";
 const getClientAxios = () => {
   //   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const options = {
-    baseURL: "http://localhost:4000/api/",
+    baseURL: "https://youfarm-backend.herokuapp.com/api/",
     headers: {
       Accept: "application/json",
     },
