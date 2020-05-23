@@ -10,7 +10,10 @@ class ArticleClass {
     async add(req, res) {
         try {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
-            const logged_admin = decodeJWToken(token, "admin")
+            const logged_admin = decodeJWToken(token, "admin");
+            const publisher = await Admin.findOne({
+                _id: logged_admin
+            })
             let {
                 title,
                 body,
@@ -34,12 +37,16 @@ class ArticleClass {
                 });
 
             const data = {
-                publisher_id: logged_admin,
                 title,
                 body,
                 image_url,
                 category,
                 published,
+                publisher: {
+                    _id: publisher._id,
+                    name: publisher.first_name + " " + publisher.last_name,
+                    email: publisher.email
+                },
                 created_at,
                 updated_at: created_at
             }
@@ -60,14 +67,14 @@ class ArticleClass {
                 .catch((err) => {
                     res.status(500).json({
                         status: false,
-                        message: "An error occur, failed to create article. Try again"
+                        message: "An error occur, failed to create article. Try again" + err
                     })
                 })
 
         } catch (error) {
             res.status(500).json({
                 status: false,
-                message: "An error occur, failed to create article. Try again"
+                message: "An error occur, failed to create article. Try again" + error
             })
         }
     }
@@ -81,7 +88,7 @@ class ArticleClass {
                 category,
                 published
             } = req.body;
-            const created_at = currentTimestamp();
+            const updated_at = currentTimestamp();
 
             const requiredValues = [
                 title,
@@ -126,7 +133,7 @@ class ArticleClass {
                 image_url,
                 category,
                 published,
-                updated_at: created_at
+                updated_at: updated_at
             }
 
             Article.findByIdAndUpdate(article_id, {
@@ -166,11 +173,6 @@ class ArticleClass {
 
             if (articles.length > 0) {
                 for (let x in articles) {
-                    const publisher = await Admin.findOne({
-                        _id: articles[x].publisher_id
-                    }, {
-                        password: 0
-                    })
 
                     all_articles.push({
                         _id: articles[x]._id,
@@ -179,9 +181,9 @@ class ArticleClass {
                         image_url: articles[x].image_url,
                         category: articles[x].category,
                         published: articles[x].published,
+                        publisher: articles[x].publisher,
                         created_at: articles[x].created_at,
-                        updated_at: articles[x].updated_at,
-                        publisher: publisher
+                        updated_at: articles[x].updated_at
                     })
                 }
                 return res.status(200).json({
@@ -228,12 +230,6 @@ class ArticleClass {
                     message: 'Article does not exists.'
                 });
 
-            const publisher = await Admin.findOne({
-                _id: article.publisher_id
-            }, {
-                password: 0
-            })
-
             let details = {
                 _id: article._id,
                 title: article.title,
@@ -241,9 +237,9 @@ class ArticleClass {
                 image_url: article.image_url,
                 category: article.category,
                 published: article.published,
+                publisher: article.publisher,
                 created_at: article.created_at,
-                updated_at: article.updated_at,
-                publisher: publisher
+                updated_at: article.updated_at
             };
 
             return res.status(200).json({

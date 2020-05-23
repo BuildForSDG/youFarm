@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const articleSchema = mongoose.Schema({
-    publisher_id: {
-        type: String,
-        required: true
-    },
     title: {
         type: String,
         required: true
@@ -22,6 +18,9 @@ const articleSchema = mongoose.Schema({
     },
     published: {
         type: Boolean
+    },
+    publisher: {
+        type: Object
     },
     created_at: {
         type: String,

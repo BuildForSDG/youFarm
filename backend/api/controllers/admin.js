@@ -251,6 +251,8 @@ class AdminClass {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
             const logged_admin = decodeJWToken(token, 'admin');
 
+            const updated_at = currentTimestamp();
+
             let {
                 first_name,
                 last_name
@@ -268,7 +270,8 @@ class AdminClass {
             Admin.findByIdAndUpdate(logged_admin, {
                     $set: {
                         first_name: first_name,
-                        last_name: last_name
+                        last_name: last_name,
+                        updated_at: updated_at
                     }
                 })
                 .then((data) => {

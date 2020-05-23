@@ -48,8 +48,10 @@ module.exports = (app) => {
 
     //supplier
     app.post(endpoint + 'supplier/apply', isUserLoggedIn, supplierCtrl.apply);
-    app.get(endpoint + 'supplier/approve/:supplier_id', isAdminLoggedIn, supplierCtrl.approve);
     app.get(endpoint + 'suppliers', isAdminLoggedIn, supplierCtrl.allSuppliers);
     app.delete(endpoint + 'supplier/delete/:supplier_id', isAdminLoggedIn, supplierCtrl.deleteSupplier);
     app.get(endpoint + 'supplier/:supplier_id', supplierCtrl.supplierDetailsById);
+    app.get(endpoint + 'supplier/approve/:supplier_id', isAdminLoggedIn, supplierCtrl.approve);
+    app.get(endpoint + 'supplier/reject/:supplier_id', isAdminLoggedIn, supplierCtrl.reject);
+    app.get(endpoint + 'supplier/disable/:supplier_id', isAdminLoggedIn, supplierCtrl.disable);
 };

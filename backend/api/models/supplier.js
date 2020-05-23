@@ -42,8 +42,8 @@ const supplierSchema = mongoose.Schema({
     address: {
         type: String
     },
-    approved: {
-        type: Boolean,
+    status: {
+        type: String,
         required: true
     },
     created_at: {

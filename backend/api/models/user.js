@@ -30,13 +30,19 @@ const userSchema = mongoose.Schema({
     address: {
         type: String
     },
-    isSupplier: {
+    is_supplier: {
         type: Boolean,
         required: true
+    },
+    supplier_status: {
+        type: String
     },
     password: {
         type: String,
         required: true
+    },
+    deleted: {
+        type: Boolean
     },
     created_at: {
         type: String,
@@ -45,6 +51,9 @@ const userSchema = mongoose.Schema({
     updated_at: {
         type: String,
         required: true
+    },
+    deleted_at: {
+        type: String
     }
 });
 

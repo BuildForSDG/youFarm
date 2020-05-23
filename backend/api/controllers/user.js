@@ -37,8 +37,12 @@ class UserClass {
                 state: data.state,
                 city: data.city,
                 address: data.address,
+                deleted: data.deleted,
+                is_supplier: data.is_supplier,
+                supplier_status: data.supplier_status,
                 created_at: data.created_at,
-                updated_at: data.updated_at
+                updated_at: data.updated_at,
+                deleted_at: data.deleted_at
             };
 
             const passwordCheck = bcrypt.compareSync(password, data.password);
@@ -147,10 +151,13 @@ class UserClass {
                 state: state,
                 city: city,
                 address: address,
-                isSupplier: false,
+                is_supplier: false,
+                supplier_status: "",
                 password: bcrypt.hashSync(password, salt),
-                created_at,
-                updated_at: created_at
+                deleted: false,
+                created_at: created_at,
+                updated_at: created_at,
+                deleted_at: ""
             };
 
             const newUser = new User(data);
@@ -187,6 +194,7 @@ class UserClass {
         try {
             const token = req.body.token || req.params.token || req.headers['x-access-token'];
             const logged_user = decodeJWToken(token, 'user');
+            const updated_at = currentTimestamp();
 
             let {
                 first_name,
@@ -235,7 +243,8 @@ class UserClass {
                         gender: gender,
                         state: state,
                         city: city,
-                        address: address
+                        address: address,
+                        updated_at: updated_at
                     }
                 })
                 .then((data) => {
@@ -294,9 +303,12 @@ class UserClass {
                 state: user.state,
                 city: user.city,
                 address: user.address,
-                isSupplier: user.isSupplier,
+                deleted: user.deleted,
+                is_supplier: user.is_supplier,
+                supplier_status: user.supplier_status,
                 created_at: user.created_at,
-                updated_at: user.updated_at
+                updated_at: user.updated_at,
+                deleted_at: user.deleted_at
             };
 
             return res.status(200).json({
@@ -313,7 +325,11 @@ class UserClass {
 
     async allUsers(req, res) {
         try {
-            const users = await User.find({}).sort({
+            const users = await User.find({
+                deleted: 0
+            }, {
+                password: 0
+            }).sort({
                 _id: -1
             });
 
@@ -345,6 +361,8 @@ class UserClass {
                 user_exists
             } = false;
 
+            const deleted_at = currentTimestamp();
+
             if (!user_id)
                 return res.status(404).json({
                     status: false,
@@ -362,7 +380,12 @@ class UserClass {
                     message: 'User details does not exists.'
                 });
 
-            User.findByIdAndDelete(user_id)
+            User.findByIdAndUpdate(user_id, {
+                    $set: {
+                        deleted: true,
+                        deleted_at: deleted_at
+                    }
+                })
                 .then((data) => {
                     res.status(201).json({
                         status: true,

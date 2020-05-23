@@ -91,7 +91,7 @@ class SupplierClass {
                 state: user.state,
                 city: user.city,
                 address: user.address,
-                approved: false,
+                status: "pending",
                 created_at,
                 updated_at: created_at
             };
@@ -148,7 +148,7 @@ class SupplierClass {
 
             Supplier.findByIdAndUpdate(supplier_id, {
                     $set: {
-                        approved: true,
+                        status: "approved",
                         approved_at: approved_at
                     }
                 }, {
@@ -171,7 +171,8 @@ class SupplierClass {
 
             User.findByIdAndUpdate(user_id, {
                     $set: {
-                        isSupplier: true
+                        is_supplier: true,
+                        supplier_status: "approved"
                     }
                 }, {
                     returnNewDocument: true,
@@ -195,6 +196,158 @@ class SupplierClass {
             res.status(500).json({
                 status: false,
                 message: "An error occur, can't approve supplier. Try again" + error
+            })
+        }
+    }
+
+    async reject(req, res) {
+        try {
+            const rejected_at = currentTimestamp();
+
+            const {
+                supplier_id
+            } = req.params;
+
+            const supplier = await Supplier.findOne({
+                _id: supplier_id
+            });
+
+            const user_id = supplier.user_id;
+
+            const supplier_exists = supplier ? true : false;
+
+            if (!supplier_exists)
+                return res.status(200).json({
+                    status: false,
+                    message: 'Supplier does not exists.'
+                });
+
+            Supplier.findByIdAndUpdate(supplier_id, {
+                    $set: {
+                        status: "rejected",
+                        rejected_at: rejected_at
+                    }
+                }, {
+                    returnNewDocument: true,
+                    new: true,
+                    strict: false
+                })
+                .then(async() => {
+                    res.status(201).json({
+                        status: true,
+                        message: "Supplier rejected successfully"
+                    })
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        status: false,
+                        message: "An error occur, can't reject supplier. Try again"
+                    })
+                })
+
+            User.findByIdAndUpdate(user_id, {
+                    $set: {
+                        is_supplier: false,
+                        supplier_status: "rejected"
+                    }
+                }, {
+                    returnNewDocument: true,
+                    new: true,
+                    strict: false
+                })
+                .then(async() => {
+                    res.status(201).json({
+                        status: true,
+                        message: "Supplier rejected successfully"
+                    })
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        status: false,
+                        message: "An error occur, can't reject supplier. Try again"
+                    })
+                })
+
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: "An error occur, can't reject supplier. Try again" + error
+            })
+        }
+    }
+
+    async disable(req, res) {
+        try {
+            const disabled_at = currentTimestamp();
+
+            const {
+                supplier_id
+            } = req.params;
+
+            const supplier = await Supplier.findOne({
+                _id: supplier_id
+            });
+
+            const user_id = supplier.user_id;
+
+            const supplier_exists = supplier ? true : false;
+
+            if (!supplier_exists)
+                return res.status(200).json({
+                    status: false,
+                    message: 'Supplier does not exists.'
+                });
+
+            Supplier.findByIdAndUpdate(supplier_id, {
+                    $set: {
+                        status: "disabled",
+                        disabled_at: disabled_at
+                    }
+                }, {
+                    returnNewDocument: true,
+                    new: true,
+                    strict: false
+                })
+                .then(async() => {
+                    res.status(201).json({
+                        status: true,
+                        message: "Supplier disabled successfully"
+                    })
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        status: false,
+                        message: "An error occur, can't disable supplier. Try again"
+                    })
+                })
+
+            User.findByIdAndUpdate(user_id, {
+                    $set: {
+                        is_supplier: false,
+                        supplier_status: "disabled"
+                    }
+                }, {
+                    returnNewDocument: true,
+                    new: true,
+                    strict: false
+                })
+                .then(async() => {
+                    res.status(201).json({
+                        status: true,
+                        message: "Supplier disabled successfully"
+                    })
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        status: false,
+                        message: "An error occur, can't disable supplier. Try again"
+                    })
+                })
+
+        } catch (error) {
+            res.status(500).json({
+                status: false,
+                message: "An error occur, can't disable supplier. Try again" + error
             })
         }
     }
@@ -262,7 +415,7 @@ class SupplierClass {
                 state: supplier.state,
                 city: supplier.city,
                 address: supplier.address,
-                approved: supplier.approved,
+                status: supplier.status,
                 created_at: supplier.created_at,
                 updated_at: supplier.updated_at,
                 approved_at: supplier.approved_at
