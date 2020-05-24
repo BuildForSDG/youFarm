@@ -1,22 +1,26 @@
 import mongoose from 'mongoose';
 
-const adminSchema = mongoose.Schema({
-    first_name: {
+const articleSchema = mongoose.Schema({
+    title: {
         type: String,
         required: true
     },
-    last_name: {
+    body: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true,
-        lowercase: true
+    image_url: {
+        type: String
     },
-    password: {
+    category: {
         type: String,
         required: true
+    },
+    published: {
+        type: Boolean
+    },
+    publisher: {
+        type: Object
     },
     created_at: {
         type: String,
@@ -28,4 +32,4 @@ const adminSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('admins', adminSchema);
+module.exports = mongoose.model('articles', articleSchema);

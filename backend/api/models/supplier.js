@@ -1,6 +1,18 @@
 import mongoose from 'mongoose';
 
-const userSchema = mongoose.Schema({
+const supplierSchema = mongoose.Schema({
+    business_name: {
+        type: String,
+        required: true
+    },
+    business_category: {
+        type: String,
+        required: true
+    },
+    user_id: {
+        type: String,
+        required: true
+    },
     first_name: {
         type: String,
         required: true
@@ -30,19 +42,9 @@ const userSchema = mongoose.Schema({
     address: {
         type: String
     },
-    is_supplier: {
-        type: Boolean,
-        required: true
-    },
-    supplier_status: {
-        type: String
-    },
-    password: {
+    status: {
         type: String,
         required: true
-    },
-    deleted: {
-        type: Boolean
     },
     created_at: {
         type: String,
@@ -51,10 +53,7 @@ const userSchema = mongoose.Schema({
     updated_at: {
         type: String,
         required: true
-    },
-    deleted_at: {
-        type: String
     }
 });
 
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('suppliers', supplierSchema);
