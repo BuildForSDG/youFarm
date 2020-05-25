@@ -100,7 +100,7 @@ class SupplierClass {
 
             newSupplier
                 .save()
-                .then(async(data) => {
+                .then(async (data) => {
                     const details = await Supplier.findOne({
                         _id: data._id
                     });
@@ -147,16 +147,16 @@ class SupplierClass {
                 });
 
             Supplier.findByIdAndUpdate(supplier_id, {
-                    $set: {
-                        status: "approved",
-                        approved_at: approved_at
-                    }
-                }, {
-                    returnNewDocument: true,
-                    new: true,
-                    strict: false
-                })
-                .then(async() => {
+                $set: {
+                    status: "approved",
+                    approved_at: approved_at
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
+                .then(async () => {
                     res.status(201).json({
                         status: true,
                         message: "Supplier approved successfully"
@@ -170,16 +170,16 @@ class SupplierClass {
                 })
 
             User.findByIdAndUpdate(user_id, {
-                    $set: {
-                        is_supplier: true,
-                        supplier_status: "approved"
-                    }
-                }, {
-                    returnNewDocument: true,
-                    new: true,
-                    strict: false
-                })
-                .then(async() => {
+                $set: {
+                    is_supplier: true,
+                    supplier_status: "approved"
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
+                .then(async () => {
                     res.status(201).json({
                         status: true,
                         message: "Supplier approved successfully"
@@ -223,16 +223,16 @@ class SupplierClass {
                 });
 
             Supplier.findByIdAndUpdate(supplier_id, {
-                    $set: {
-                        status: "rejected",
-                        rejected_at: rejected_at
-                    }
-                }, {
-                    returnNewDocument: true,
-                    new: true,
-                    strict: false
-                })
-                .then(async() => {
+                $set: {
+                    status: "rejected",
+                    rejected_at: rejected_at
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
+                .then(async () => {
                     res.status(201).json({
                         status: true,
                         message: "Supplier rejected successfully"
@@ -246,16 +246,16 @@ class SupplierClass {
                 })
 
             User.findByIdAndUpdate(user_id, {
-                    $set: {
-                        is_supplier: false,
-                        supplier_status: "rejected"
-                    }
-                }, {
-                    returnNewDocument: true,
-                    new: true,
-                    strict: false
-                })
-                .then(async() => {
+                $set: {
+                    is_supplier: false,
+                    supplier_status: "rejected"
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
+                .then(async () => {
                     res.status(201).json({
                         status: true,
                         message: "Supplier rejected successfully"
@@ -299,16 +299,16 @@ class SupplierClass {
                 });
 
             Supplier.findByIdAndUpdate(supplier_id, {
-                    $set: {
-                        status: "disabled",
-                        disabled_at: disabled_at
-                    }
-                }, {
-                    returnNewDocument: true,
-                    new: true,
-                    strict: false
-                })
-                .then(async() => {
+                $set: {
+                    status: "disabled",
+                    disabled_at: disabled_at
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
+                .then(async () => {
                     res.status(201).json({
                         status: true,
                         message: "Supplier disabled successfully"
@@ -322,16 +322,16 @@ class SupplierClass {
                 })
 
             User.findByIdAndUpdate(user_id, {
-                    $set: {
-                        is_supplier: false,
-                        supplier_status: "disabled"
-                    }
-                }, {
-                    returnNewDocument: true,
-                    new: true,
-                    strict: false
-                })
-                .then(async() => {
+                $set: {
+                    is_supplier: false,
+                    supplier_status: "disabled"
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
+                .then(async () => {
                     res.status(201).json({
                         status: true,
                         message: "Supplier disabled successfully"

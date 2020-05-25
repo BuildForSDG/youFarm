@@ -54,7 +54,7 @@ class ArticleClass {
             const newArticle = new Article(data)
             newArticle
                 .save()
-                .then(async(data) => {
+                .then(async (data) => {
                     const details = await Article.findOne({
                         _id: data._id
                     })
@@ -137,9 +137,9 @@ class ArticleClass {
             }
 
             Article.findByIdAndUpdate(article_id, {
-                    $set: data
-                })
-                .then(async(data) => {
+                $set: data
+            })
+                .then(async (data) => {
                     const details = await Article.findOne({
                         _id: article_id
                     })

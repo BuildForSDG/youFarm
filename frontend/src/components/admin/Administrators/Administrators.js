@@ -10,12 +10,12 @@ function AdminRow(props) {
     return status === "Active"
       ? "success"
       : status === "Inactive"
-      ? "secondary"
-      : status === "Pending"
-      ? "warning"
-      : status === "Banned"
-      ? "danger"
-      : "primary";
+        ? "secondary"
+        : status === "Pending"
+          ? "warning"
+          : status === "Banned"
+            ? "danger"
+            : "primary";
   };
 
   return (

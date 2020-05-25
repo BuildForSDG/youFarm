@@ -24,9 +24,9 @@ export const decodeJWToken = (token, type) => {
     return userId;
 };
 
-export const verifyJWToken = async(token) => {
+export const verifyJWToken = async (token) => {
     return new Promise((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET, async function(err, decodedToken) {
+        jwt.verify(token, process.env.JWT_SECRET, async function (err, decodedToken) {
             if (err || !decodedToken) {
                 return reject(err);
             }

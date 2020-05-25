@@ -1,5 +1,5 @@
 {
-  "name": "DefaultLayout",
+  "name": "defaultlayout",
   "version": "0.0.0",
   "private": true,
   "main": "./DefaultLayout.js"

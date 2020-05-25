@@ -130,7 +130,7 @@ class AdminClass {
 
             newAdmin
                 .save()
-                .then(async(data) => {
+                .then(async (data) => {
                     const details = await Admin.findOne({
                         _id: data._id
                     }, {
@@ -268,12 +268,12 @@ class AdminClass {
                 });
 
             Admin.findByIdAndUpdate(logged_admin, {
-                    $set: {
-                        first_name: first_name,
-                        last_name: last_name,
-                        updated_at: updated_at
-                    }
-                })
+                $set: {
+                    first_name: first_name,
+                    last_name: last_name,
+                    updated_at: updated_at
+                }
+            })
                 .then((data) => {
                     res.status(201).json({
                         status: true,

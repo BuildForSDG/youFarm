@@ -5,6 +5,6 @@ import Login from './Login';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<MemoryRouter><Login/></MemoryRouter>, div);
+  ReactDOM.render(<MemoryRouter><Login /></MemoryRouter>, div);
   ReactDOM.unmountComponentAtNode(div);
 });
