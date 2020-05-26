@@ -1,10 +1,5 @@
 import User from '../models/user';
-import {
-    trimString,
-    isEmpty,
-    currentTimestamp,
-    decodeJWToken
-} from '../utils/helper';
+import { trimString, isEmpty, currentTimestamp, decodeJWToken } from '../utils/helper';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -13,10 +8,7 @@ dotenv.config();
 class UserClass {
     async login(req, res) {
         try {
-            let {
-                email,
-                password
-            } = req.body;
+            let { email, password } = req.body;
             const data = await User.findOne({
                 email: email
             });
@@ -54,7 +46,8 @@ class UserClass {
                 });
 
             const payload = {
-                user: data._id
+                user: data._id,
+                supplier: data.is_supplier
             };
             const options = {
                 expiresIn: process.env.JWT_MAX_AGE,
@@ -92,11 +85,7 @@ class UserClass {
                 password_confirmation
             } = req.body;
             const created_at = currentTimestamp();
-            let {
-                email_exists,
-                phone_exists,
-                password_match
-            } = false;
+            let { email_exists, phone_exists, password_match } = false;
 
             const requiredValues = [first_name, last_name, email, phone, password, password_confirmation];
             const isValueEmpty = isEmpty(requiredValues);
@@ -152,19 +141,19 @@ class UserClass {
                 city: city,
                 address: address,
                 is_supplier: false,
-                supplier_status: "",
+                supplier_status: '',
                 password: bcrypt.hashSync(password, salt),
                 deleted: false,
                 created_at: created_at,
                 updated_at: created_at,
-                deleted_at: ""
+                deleted_at: ''
             };
 
             const newUser = new User(data);
 
             newUser
                 .save()
-                .then(async (data) => {
+                .then(async(data) => {
                     const details = await User.findOne({
                         _id: data._id
                     }, {
@@ -196,18 +185,8 @@ class UserClass {
             const logged_user = decodeJWToken(token, 'user');
             const updated_at = currentTimestamp();
 
-            let {
-                first_name,
-                last_name,
-                phone,
-                gender,
-                state,
-                city,
-                address
-            } = req.body;
-            let {
-                phone_exists
-            } = false;
+            let { first_name, last_name, phone, gender, state, city, address } = req.body;
+            let { phone_exists } = false;
 
             const allValues = [first_name, last_name, phone, gender, state, city, address];
             const isValueEmpty = isEmpty(allValues);
@@ -236,17 +215,17 @@ class UserClass {
                 });
 
             User.findByIdAndUpdate(logged_user, {
-                $set: {
-                    first_name: first_name,
-                    last_name: last_name,
-                    phone: phone,
-                    gender: gender,
-                    state: state,
-                    city: city,
-                    address: address,
-                    updated_at: updated_at
-                }
-            })
+                    $set: {
+                        first_name: first_name,
+                        last_name: last_name,
+                        phone: phone,
+                        gender: gender,
+                        state: state,
+                        city: city,
+                        address: address,
+                        updated_at: updated_at
+                    }
+                })
                 .then((data) => {
                     res.status(201).json({
                         status: true,
@@ -269,12 +248,8 @@ class UserClass {
 
     async userDetailsById(req, res) {
         try {
-            const {
-                user_id
-            } = req.params;
-            let {
-                user_exists
-            } = false;
+            const { user_id } = req.params;
+            let { user_exists } = false;
 
             if (!user_id)
                 return res.status(404).json({
@@ -354,12 +329,8 @@ class UserClass {
 
     async deleteUser(req, res) {
         try {
-            const {
-                user_id
-            } = req.params;
-            let {
-                user_exists
-            } = false;
+            const { user_id } = req.params;
+            let { user_exists } = false;
 
             const deleted_at = currentTimestamp();
 
@@ -381,11 +352,11 @@ class UserClass {
                 });
 
             User.findByIdAndUpdate(user_id, {
-                $set: {
-                    deleted: true,
-                    deleted_at: deleted_at
-                }
-            })
+                    $set: {
+                        deleted: true,
+                        deleted_at: deleted_at
+                    }
+                })
                 .then((data) => {
                     res.status(201).json({
                         status: true,

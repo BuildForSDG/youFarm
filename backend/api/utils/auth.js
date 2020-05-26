@@ -4,11 +4,11 @@ import { verifyJWToken } from '../utils/helper';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const isAdminLoggedIn = function (req, res, next) {
+export const isAdminLoggedIn = function(req, res, next) {
     const token = req.body.token || req.params.token || req.headers['x-access-token'];
 
     verifyJWToken(token)
-        .then(async (decodedToken) => {
+        .then(async(decodedToken) => {
             let logged_admin = decodedToken.admin;
             let admin_exists = await Admin.findOne({ _id: logged_admin }, { _id: 0, password: 0, created_at: 0, updated_at: 0 });
 
@@ -25,11 +25,55 @@ export const isAdminLoggedIn = function (req, res, next) {
         });
 };
 
-export const isUserLoggedIn = function (req, res, next) {
+export const isLoggedIn = function(req, res, next) {
     const token = req.body.token || req.params.token || req.headers['x-access-token'];
 
     verifyJWToken(token)
-        .then(async (decodedToken) => {
+        .then(async(decodedToken) => {
+            let logged_admin = decodedToken.admin;
+            let logged_user = decodedToken.user;
+            let admin_exists = await Admin.findOne({ _id: logged_admin }, { _id: 0, password: 0, created_at: 0, updated_at: 0 });
+            let user_exists = await User.findOne({ _id: logged_user }, { _id: 0, password: 0, created_at: 0, updated_at: 0 });
+
+            if (!admin_exists && !user_exists) return res.status(401).json({ status: false, message: 'unauthorized' });
+
+            return next();
+        })
+        .catch((error) => {
+            if (error.name == 'TokenExpiredError') {
+                return res.status(401).json({ status: false, message: 'Token has expired' });
+            } else {
+                return res.status(401).json({ status: false, message: 'unauthorized' });
+            }
+        });
+};
+
+export const isSupplier = function(req, res, next) {
+    const token = req.body.token || req.params.token || req.headers['x-access-token'];
+
+    verifyJWToken(token)
+        .then(async(decodedToken) => {
+            let supplier = decodedToken.supplier;
+            let supplier_exists = await User.findOne({ is_supplier: supplier }, { _id: 0, password: 0, created_at: 0, updated_at: 0 });
+
+            if (!supplier_exists) return res.status(401).json({ status: false, message: 'Only supplier can post product' });
+
+            return next();
+        })
+        .catch((error) => {
+            if (error.name == 'TokenExpiredError') {
+                return res.status(401).json({ status: false, message: 'Token has expired' });
+            } else {
+                return res.status(401).json({ status: false, message: 'unauthorized' });
+            }
+        });
+};
+
+export const isUserLoggedIn = function(req, res, next) {
+    const token = req.body.token || req.params.token || req.headers['x-access-token'];
+
+    verifyJWToken(token)
+        .then(async(decodedToken) => {
             let logged_user = decodedToken.user;
             let user_exists = await User.findOne({ _id: logged_user }, { _id: 0, password: 0, created_at: 0, updated_at: 0 });
 
