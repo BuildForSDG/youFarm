@@ -233,7 +233,7 @@ class AdminClass {
                     });
                 })
                 .catch((error) => {
-                    res.status(500).json({
+                    res.status(200).json({
                         status: false,
                         message: 'An error occured. Unable to delete admin. Try again.'
                     });

@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+import { AdminServices } from '../../../services/adminServices';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Spinner } from 'reactstrap';
 import {
   Button,
   Card,
@@ -16,6 +21,63 @@ import {
 import logo from "../../../assets/img/brand/youFarm-admin.png";
 
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      loading: false
+    };
+
+    this.login = this.login.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
+  }
+
+  changeHandler(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  componentWillMount() {
+    if (AdminServices.adminLoggedIn())
+      this.props.history.replace('/admin/dashboard');
+  }
+
+  login(e) {
+    this.setState((prevState) => ({
+      loading: !prevState.loading
+    }));
+
+    const loginPayload = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    e.preventDefault();
+    AdminServices.login(loginPayload).then((response) => {
+      if (response.status) {
+        AdminServices.setToken(response.token)
+        AdminServices.setAdminId(response.admin.id)
+        toast.success(response.message, {
+          autoClose: 2000,
+          hideProgressBar: true
+        });
+        this.props.history.push('/admin/dashboard');
+      } else {
+        this.setState((prevState) => ({
+          loading: !prevState.loading
+        }));
+        toast.error(response.message, {
+          autoClose: 2000,
+          hideProgressBar: true
+        });
+      }
+    });
+  }
+
+
   render() {
     return (
       <div
@@ -29,7 +91,7 @@ class Login extends Component {
                 <Card className="p-4">
                   <CardBody className="text-center">
                     <img src={logo} alt="logo" width="100%" />
-                    <Form>
+                    <Form onSubmit={this.login}>
                       <p className="text-muted">Sign In to your account</p>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -38,6 +100,9 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
+                          name="email"
+                          value={this.state.email}
+                          onChange={this.changeHandler}
                           type="email"
                           placeholder="Email"
                           autoComplete="email"
@@ -50,6 +115,9 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
+                          name="password"
+                          value={this.state.password}
+                          onChange={this.changeHandler}
                           type="password"
                           placeholder="Password"
                           autoComplete="current-password"
@@ -58,13 +126,14 @@ class Login extends Component {
                       <Row>
                         <Col xs="6">
                           <Button color="success" className="px-4">
-                            Login
+                            {this.state.loading ? <Spinner size="sm" /> : null}
+                            {this.state.loading ? null : 'Login'}
                           </Button>
                         </Col>
                         <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">
+                          <Link color="link" className="px-0">
                             Forgot password?
-                          </Button>
+                          </Link>
                         </Col>
                       </Row>
                     </Form>

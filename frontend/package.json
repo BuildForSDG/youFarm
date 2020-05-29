@@ -27,6 +27,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.10.1",
     "install": "^0.13.0",
+    "jwt-decode": "^2.2.0",
     "naija-state-local-government": "^1.1.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
@@ -45,7 +46,8 @@
     "simple-line-icons": "^2.4.1"
   },
   "devDependencies": {
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.0.1",
+    "stylelint-config-recommended": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

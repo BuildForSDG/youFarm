@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { UserServices } from "../../../services/userServices";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Spinner } from "reactstrap";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { UserServices } from '../../../services/userServices';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Spinner } from 'reactstrap';
 import {
   Button,
   Card,
@@ -16,17 +16,17 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row,
-} from "reactstrap";
-import logo from "../../../assets/img/brand/youFarm.png";
+  Row
+} from 'reactstrap';
+import logo from '../../../assets/img/brand/youFarm.png';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      loading: false,
+      email: '',
+      password: '',
+      loading: false
     };
 
     this.login = this.login.bind(this);
@@ -37,36 +37,42 @@ class Login extends Component {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 
+  componentWillMount() {
+    if (UserServices.userLoggedIn())
+      this.props.history.replace('/user/dashboard');
+  }
+
+
   login(e) {
     this.setState((prevState) => ({
-      loading: !prevState.loading,
+      loading: !prevState.loading
     }));
 
     const loginPayload = {
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
     e.preventDefault();
     UserServices.login(loginPayload).then((response) => {
-      if (response.status === true) {
-        this.props.history.push("/user/dashboard");
-        localStorage.setItem("access-token", response.token);
-        localStorage.setItem("isUser", true);
+      if (response.status) {
+        UserServices.setToken(response.token)
+        UserServices.setUserId(response.data.id)
         toast.success(response.message, {
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: true
         });
+        this.props.history.push('/user/dashboard');
       } else {
         this.setState((prevState) => ({
-          loading: !prevState.loading,
+          loading: !prevState.loading
         }));
         toast.error(response.message, {
           autoClose: 2000,
-          hideProgressBar: true,
+          hideProgressBar: true
         });
       }
     });
@@ -118,37 +124,28 @@ class Login extends Component {
                         <Col xs="6">
                           <Button color="success" className="px-4">
                             {this.state.loading ? <Spinner size="sm" /> : null}
-                            {this.state.loading ? null : "Login"}
+                            {this.state.loading ? null : 'Login'}
                           </Button>
                         </Col>
                         <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">
+                          <Link color="link" className="px-0">
                             Forgot password?
-                          </Button>
+                          </Link>
                         </Col>
                       </Row>
                     </Form>
                   </CardBody>
                 </Card>
-                <Card
-                  className="text-white bg-success py-5 d-md-down-none"
-                  style={{ width: "44%" }}
-                >
+                <Card className="text-white bg-success py-5 d-md-down-none" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
                       <h1>Sign up</h1>
                       <p>
-                        Want to improve your farming skills and automate your
-                        family process. Join us now to experience a life
-                        changing farming experience.
+                        Want to improve your farming skills and automate your family process. Join us now to experience
+                        a life changing farming experience.
                       </p>
                       <Link to="/register">
-                        <Button
-                          color="danger"
-                          className="mt-3"
-                          active
-                          tabIndex={-1}
-                        >
+                        <Button color="danger" className="mt-3" active tabIndex={-1}>
                           Register Now!
                         </Button>
                       </Link>
