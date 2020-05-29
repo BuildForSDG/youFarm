@@ -10,14 +10,7 @@
         "type": "git",
         "url": "git+https://github.com/BuildForSDG/youFarm.git"
     },
-    "keywords": [
-        "farming",
-        "farmer",
-        "local",
-        "sdg",
-        "crops",
-        "plants"
-    ],
+    "keywords": ["farming", "farmer", "local", "sdg", "crops", "plants"],
     "engines": {
         "node": "10.16.3"
     },
@@ -40,7 +33,7 @@
         "babel-preset-env": "^1.7.0",
         "nodemon": "^2.0.3",
         "stylelint": "^13.5.0",
-        "stylelint-config-standard": "^20.0.0"
+        "stylelint-config-recommended": "^20.0.0"
     },
     "author": "SDG Team 233",
     "license": "ISC",

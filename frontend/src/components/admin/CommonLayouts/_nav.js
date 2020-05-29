@@ -8,12 +8,17 @@ export default {
     {
       name: "Users",
       url: "/admin/users",
-      icon: "icon-drop",
+      icon: "icon-user",
+    },
+    {
+      name: "Suppliers",
+      url: "/admin/suppliers",
+      icon: "icon-badge",
     },
     {
       name: "Administrators",
       url: "/admin/admins",
-      icon: "icon-drop",
+      icon: "icon-badge",
     },
   ],
 };

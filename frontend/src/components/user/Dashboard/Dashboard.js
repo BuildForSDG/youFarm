@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import { Card, CardBody, Col, Row } from "reactstrap";
+import { UserServices } from '../../../services/userServices';
 
 class Dashboard extends Component {
+
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
   );
+
+  componentWillMount() {
+    if (!UserServices.userLoggedIn())
+      this.props.history.replace('/login');
+  }
 
   render() {
     return (

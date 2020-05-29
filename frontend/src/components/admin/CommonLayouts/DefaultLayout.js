@@ -2,6 +2,7 @@ import React, { Component, Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import * as router from "react-router-dom";
 import { Container } from "reactstrap";
+import { AdminServices } from "../../../services/adminServices";
 
 import {
   AppFooter,
@@ -26,7 +27,8 @@ class DefaultLayout extends Component {
 
   signOut(e) {
     e.preventDefault();
-    this.props.history.push("/login");
+    AdminServices.logout();
+    this.props.history.push("/admin/login");
   }
 
   render() {

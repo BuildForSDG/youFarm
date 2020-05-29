@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./App.scss";
+import { UserServices } from "./services/userServices";
+import { AdminServices } from "./services/adminServices";
 
 const loading = () => (
   <div className="animated fadeIn pt-3 text-center">Loading...</div>
@@ -60,12 +62,18 @@ class App extends Component {
             <Route
               path="/admin"
               name="Dashboard"
-              render={(props) => <AdminDashboard {...props} />}
+              render={(props) =>
+                (AdminServices.adminLoggedIn() ?
+                  <AdminDashboard {...props} /> :
+                  (<Redirect to="/admin/login" />))}
             />
             <Route
               path="/user"
               name="Dashboard"
-              render={(props) => <UserDashboard {...props} />}
+              render={(props) =>
+                (UserServices.userLoggedIn() ?
+                  <UserDashboard {...props} /> :
+                  (<Redirect to="/login" />))}
             />
             <Route
               path="*"

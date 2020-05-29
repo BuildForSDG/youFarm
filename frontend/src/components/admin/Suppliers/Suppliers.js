@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Row, Badge, Table, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Badge, Row, Table, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Spinner } from 'reactstrap';
-import { UserServices } from "../../../services/userServices";
+import { SupplierServices } from "../../../services/supplierServices";
 
-class Users extends Component {
+class Suppliers extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,21 +13,27 @@ class Users extends Component {
       loading: true,
       btnloading: false,
       showModal: false,
-      activeUserId: null
+      activeSupplierId: null
     };
     this.toggleModal = this.toggleModal.bind(this);
   }
 
-  getBadgeColor = (is_supplier) => {
-    return is_supplier === true
+  getBadgeColor = (status) => {
+    return status === "approved"
       ? "success"
-      : "warning"
+      : status === "pending"
+        ? "warning"
+        : status === "disabled"
+          ? "secondary"
+          : status === "rejected"
+            ? "danger"
+            : "primary";
   };
 
   toggleModal(item) {
     this.setState({
       showModal: !this.state.showModal,
-      activeUserId: item._id
+      activeSupplierId: item._id
     })
   }
 
@@ -37,8 +43,8 @@ class Users extends Component {
     })
   }
 
-  getAllUsers() {
-    UserServices.allUsers().then((response) => {
+  getAllSuppliers() {
+    SupplierServices.allSuppliers().then((response) => {
       if (response.status) {
         this.setState({
           data: response.data
@@ -58,11 +64,11 @@ class Users extends Component {
     })
   }
 
-  deleteUser(userId) {
+  deleteSupplier(supplierId) {
     this.setState((prevState) => ({
       btnloading: !prevState.btnloading
     }));
-    UserServices.deleteUser(userId).then((response) => {
+    SupplierServices.deleteSupplier(supplierId).then((response) => {
 
       if (response.data.status) {
         this.setState((prevState) => ({
@@ -94,51 +100,53 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    this.getAllUsers()
+    this.getAllSuppliers()
   }
 
   render() {
-    const userList = this.state.data;
+    const supplierList = this.state.data;
     return (
       <div className="animated fadeIn">
         <Row className="m-5">
           <Col xl={12}>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Users {this.state.loading ? <Spinner size="sm" /> : null}
+                <i className="fa fa-align-justify"></i> Suppliers {this.state.loading ? <Spinner size="sm" /> : null}
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
+                      <th scope="col">Business Name</th>
+                      <th scope="col">Business Category</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Email Address</th>
                       <th scope="col">Phone Number</th>
                       <th scope="col">Gender</th>
                       <th scope="col">State</th>
                       <th scope="col">City</th>
                       <th scope="col">Address</th>
-                      <th scope="col">Supplier Status</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user) => (
-                      <tr key={user._id}>
-                        <td>{user.first_name}</td>
-                        <td>{user.last_name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.phone}</td>
-                        <td>{user.gender}</td>
-                        <td>{user.state}</td>
-                        <td>{user.city}</td>
-                        <td>{user.address}</td>
+                    {supplierList.map((supplier) => (
+                      <tr key={supplier._id}>
+                        <td>{supplier.business_name}</td>
+                        <td>{supplier.business_category}</td>
+                        <td>{supplier.first_name} {supplier.last_name}</td>
+                        <td>{supplier.email}</td>
+                        <td>{supplier.phone}</td>
+                        <td>{supplier.gender}</td>
+                        <td>{supplier.state}</td>
+                        <td>{supplier.city}</td>
+                        <td>{supplier.address}</td>
                         <td>
-                          <Badge color={this.getBadgeColor(user.is_supplier)}>{user.is_supplier.toString().toUpperCase()}</Badge>
+                          <Badge color={this.getBadgeColor(supplier.status)}>{supplier.status.toUpperCase()}</Badge>
                         </td>
                         <td>
-                          <Button color="danger" onClick={() => this.toggleModal(user)}>Delete</Button>
+                          <Button color="danger" onClick={() => this.toggleModal(supplier)}>Delete</Button>
                         </td>
                       </tr>
                     ))}
@@ -152,10 +160,10 @@ class Users extends Component {
           <Modal isOpen={this.state.showModal} toggle={this.toggleModal}>
             <ModalHeader toggle={this.toggleModal}>Are you sure?</ModalHeader>
             <ModalBody>
-              Please confirm you want to delete this user
+              Please confirm you want to delete this supplier
         </ModalBody>
             <ModalFooter>
-              <Button color="danger" onClick={() => this.deleteUser(this.state.activeUserId)}>
+              <Button color="danger" onClick={() => this.deleteSupplier(this.state.activeSupplierId)}>
                 {this.state.btnloading ? <Spinner size="sm" /> : null}
                 {this.state.btnloading ? null : 'Delete'}
               </Button>
@@ -167,4 +175,4 @@ class Users extends Component {
   }
 }
 
-export default Users;
+export default Suppliers;
