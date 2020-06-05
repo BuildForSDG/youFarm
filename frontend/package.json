@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^19.0.2",
+<<<<<<< HEAD
     "@ckeditor/ckeditor5-image": "^19.0.1",
+=======
+>>>>>>> 4a888fe1b6ce9491403c55de53f65527c82a0ec1
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@coreui/coreui": "^2.1.12",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.1",
@@ -23,7 +26,11 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
+<<<<<<< HEAD
     "ckeditor-cloudinary-uploader-adapter": "^1.1.3",
+=======
+    "ckeditor-cloudinary-uploader-adapter": "^1.1.1",
+>>>>>>> 4a888fe1b6ce9491403c55de53f65527c82a0ec1
     "classnames": "^2.2.6",
     "core-js": "^3.1.4",
     "enzyme": "^3.10.0",
@@ -34,6 +41,11 @@
     "install": "^0.13.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.26.0",
+<<<<<<< HEAD
+=======
+    "react-moment": "^0.9.7",
+    "react-text-truncate": "^0.16.0",
+>>>>>>> 4a888fe1b6ce9491403c55de53f65527c82a0ec1
     "naija-state-local-government": "^1.1.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
