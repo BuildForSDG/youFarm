@@ -13,7 +13,7 @@ const loading = () => (
 const AdminDashboard = React.lazy(() =>
   import("./components/admin/CommonLayouts/DefaultLayout")
 );
-const UserDashboard = React.lazy(() =>
+const UserArticles = React.lazy(() =>
   import("./components/user/CommonLayouts/DefaultLayout")
 );
 
@@ -23,7 +23,7 @@ const UserLogin = React.lazy(() => import("./components/user/Login/Login"));
 const Register = React.lazy(() =>
   import("./components/user/Register/Register")
 );
-const Page404 = React.lazy(() => import("./components/misc/Page404"));
+const Page404 = React.lazy(() => import("./components/misc/Page404/Page404"));
 
 toast.configure();
 
@@ -69,10 +69,10 @@ class App extends Component {
             />
             <Route
               path="/user"
-              name="Dashboard"
+              name="Articles"
               render={(props) =>
                 (UserServices.userLoggedIn() ?
-                  <UserDashboard {...props} /> :
+                  <UserArticles {...props} /> :
                   (<Redirect to="/login" />))}
             />
             <Route

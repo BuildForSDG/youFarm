@@ -43,7 +43,7 @@ class Login extends Component {
 
   componentWillMount() {
     if (UserServices.userLoggedIn())
-      this.props.history.replace('/user/dashboard');
+      this.props.history.replace('/user/articles');
   }
 
 
@@ -65,7 +65,7 @@ class Login extends Component {
           autoClose: 2000,
           hideProgressBar: true
         });
-        this.props.history.push('/user/dashboard');
+        this.props.history.push('/user/articles');
       } else {
         this.setState((prevState) => ({
           loading: !prevState.loading
@@ -83,7 +83,7 @@ class Login extends Component {
       <div className="app flex-row align-items-center">
         <Container>
           <Row className="justify-content-center">
-            <Col md="8">
+            <Col md="12">
               <CardGroup>
                 <Card className="p-4">
                   <CardBody className="text-center">
@@ -136,7 +136,7 @@ class Login extends Component {
                     </Form>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-success py-5 d-md-down-none" style={{ width: '44%' }}>
+                <Card className="text-white bg-success p-4">
                   <CardBody className="text-center">
                     <div>
                       <h1>Sign up</h1>
