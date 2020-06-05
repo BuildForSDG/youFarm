@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Row, Badge, Table, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Row, Badge, Table, Modal, ModalHeader, ModalBody, ModalFooter, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Spinner } from 'reactstrap';
@@ -105,10 +105,17 @@ class Users extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Users {this.state.loading ? <Spinner size="sm" /> : null}
+                <div>
+                  <Breadcrumb tag="nav" listTag="div">
+                    <BreadcrumbItem tag="a" onClick={() => this.props.history.push('/admin/dashboard')}>Home</BreadcrumbItem>
+                    <BreadcrumbItem active tag="span">
+                      <i className="fa fa-align-justify"></i> Users {this.state.loading ? <Spinner size="sm" /> : null}
+                    </BreadcrumbItem>
+                  </Breadcrumb>
+                </div>
               </CardHeader>
               <CardBody>
-                <Table responsive hover>
+                <Table responsive hover striped>
                   <thead>
                     <tr>
                       <th scope="col">First Name</th>
@@ -138,7 +145,9 @@ class Users extends Component {
                           <Badge color={this.getBadgeColor(user.is_supplier)}>{user.is_supplier.toString().toUpperCase()}</Badge>
                         </td>
                         <td>
-                          <Button color="danger" onClick={() => this.toggleModal(user)}>Delete</Button>
+                          <Button color="danger" onClick={() => this.toggleModal(user)}>
+                            <i className="fa fa-trash"></i>
+                          </Button>
                         </td>
                       </tr>
                     ))}

@@ -13,7 +13,7 @@ const loading = () => (
 const AdminDashboard = React.lazy(() =>
   import("./components/admin/CommonLayouts/DefaultLayout")
 );
-const UserDashboard = React.lazy(() =>
+const UserArticles = React.lazy(() =>
   import("./components/user/CommonLayouts/DefaultLayout")
 );
 
@@ -69,10 +69,10 @@ class App extends Component {
             />
             <Route
               path="/user"
-              name="Dashboard"
+              name="Articles"
               render={(props) =>
                 (UserServices.userLoggedIn() ?
-                  <UserDashboard {...props} /> :
+                  <UserArticles {...props} /> :
                   (<Redirect to="/login" />))}
             />
             <Route

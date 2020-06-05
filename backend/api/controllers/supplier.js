@@ -116,6 +116,19 @@ class SupplierClass {
                         message: 'An error occured. Unable to apply as supplier. Try again.'
                     });
                 });
+            User.findByIdAndUpdate(user._id, {
+                $set: {
+                    is_supplier: true,
+                    supplier: {
+                        status: "pending",
+                        created_at: created_at
+                    }
+                }
+            }, {
+                returnNewDocument: true,
+                new: true,
+                strict: false
+            })
         } catch (error) {
             res.status(500).json({
                 status: false,
@@ -172,25 +185,19 @@ class SupplierClass {
             User.findByIdAndUpdate(user_id, {
                 $set: {
                     is_supplier: true,
-                    supplier_status: "approved"
+                    supplier: {
+                        _id: supplier._id,
+                        business_name: supplier.business_name,
+                        business_category: supplier.business_category,
+                        status: "approved",
+                        approved_at: approved_at
+                    }
                 }
             }, {
                 returnNewDocument: true,
                 new: true,
                 strict: false
             })
-                .then(async () => {
-                    res.status(201).json({
-                        status: true,
-                        message: "Supplier approved successfully"
-                    })
-                })
-                .catch((err) => {
-                    res.status(500).json({
-                        status: false,
-                        message: "An error occur, can't approve supplier. Try again"
-                    })
-                })
 
         } catch (error) {
             res.status(500).json({
@@ -248,7 +255,13 @@ class SupplierClass {
             User.findByIdAndUpdate(user_id, {
                 $set: {
                     is_supplier: false,
-                    supplier_status: "rejected"
+                    supplier: {
+                        _id: supplier._id,
+                        business_name: supplier.business_name,
+                        business_category: supplier.business_category,
+                        status: "rejected",
+                        rejected_at: rejected_at
+                    }
                 }
             }, {
                 returnNewDocument: true,
@@ -324,7 +337,13 @@ class SupplierClass {
             User.findByIdAndUpdate(user_id, {
                 $set: {
                     is_supplier: false,
-                    supplier_status: "disabled"
+                    supplier: {
+                        _id: supplier._id,
+                        business_name: supplier.business_name,
+                        business_category: supplier.business_category,
+                        status: "disabled",
+                        disabled_at: disabled_at
+                    }
                 }
             }, {
                 returnNewDocument: true,
