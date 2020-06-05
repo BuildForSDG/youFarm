@@ -41,11 +41,7 @@ class DefaultHeader extends Component {
               />
             </DropdownToggle>
             <DropdownMenu right>
-<<<<<<< HEAD
               <DropdownItem onClick={() => this.history.push('/')}>
-=======
-              <DropdownItem>
->>>>>>> 4a888fe1b6ce9491403c55de53f65527c82a0ec1
                 <i className="fa fa-user"></i> Profile
               </DropdownItem>
               <DropdownItem onClick={(e) => this.props.onLogout(e)}>

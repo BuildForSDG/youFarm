@@ -321,7 +321,6 @@ class Suppliers extends Component {
                         <td>
                           <div className="right">
                             {this.showApproveButton(supplier.status) ?
-<<<<<<< HEAD
                               <Button className="m-1" title="Approve" color="success" onClick={() => this.toggleApproveModal(supplier)}>
                                 <i className="fas fa-check"></i>
                               </Button> : null
@@ -338,24 +337,6 @@ class Suppliers extends Component {
                             }
                             <Button color="danger" onClick={() => this.toggleDeleteModal(supplier)}>
                               <i className="fas fa-trash"></i>
-=======
-                              <Button title="Approve" color="success" onClick={() => this.toggleApproveModal(supplier)}>
-                                <i className="fa fa-syringe"></i>
-                              </Button> : null
-                            }
-                            {this.showRejectButton(supplier.status) ?
-                              <Button title="Reject" color="warning" onClick={() => this.toggleRejectModal(supplier)}>
-                                <i className="fa fa-trash"></i>
-                              </Button> : null
-                            }
-                            {this.showDisableButton(supplier.status) ?
-                              <Button title="Disable" color="secondary" onClick={() => this.toggleDisableModal(supplier)}>
-                                <i className="fa fa-trash"></i>
-                              </Button> : null
-                            }
-                            <Button color="danger" onClick={() => this.toggleDeleteModal(supplier)}>
-                              <i className="fa fa-trash"></i>
->>>>>>> 4a888fe1b6ce9491403c55de53f65527c82a0ec1
                             </Button>
                           </div>
                         </td>

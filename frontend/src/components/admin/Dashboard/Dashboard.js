@@ -18,11 +18,7 @@ class Dashboard extends Component {
   }
 
   getAllTotalValues() {
-<<<<<<< HEAD
     ArticleServices.articles().then((response) => {
-=======
-    ArticleServices.allArticles().then((response) => {
->>>>>>> 4a888fe1b6ce9491403c55de53f65527c82a0ec1
       if (response.status) {
         this.setState((prevState) => ({
           totalArticle: response.data.length,
