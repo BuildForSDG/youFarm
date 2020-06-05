@@ -116,20 +116,6 @@ class SupplierClass {
                         message: 'An error occured. Unable to apply as supplier. Try again.'
                     });
                 });
-
-            User.findByIdAndUpdate(user._id, {
-                $set: {
-                    is_supplier: false,
-                    supplier: {
-                        status: "pending",
-                        created_at: created_at
-                    }
-                }
-            }, {
-                returnNewDocument: true,
-                new: true,
-                strict: false
-            })
         } catch (error) {
             res.status(500).json({
                 status: false,
@@ -186,13 +172,7 @@ class SupplierClass {
             User.findByIdAndUpdate(user_id, {
                 $set: {
                     is_supplier: true,
-                    supplier: {
-                        _id: supplier._id,
-                        business_name: supplier.business_name,
-                        business_category: supplier.business_category,
-                        status: "approved",
-                        approved_at: approved_at
-                    }
+                    supplier_status: "approved"
                 }
             }, {
                 returnNewDocument: true,
@@ -268,13 +248,7 @@ class SupplierClass {
             User.findByIdAndUpdate(user_id, {
                 $set: {
                     is_supplier: false,
-                    supplier: {
-                        _id: supplier._id,
-                        business_name: supplier.business_name,
-                        business_category: supplier.business_category,
-                        status: "rejected",
-                        rejected_at: rejected_at
-                    }
+                    supplier_status: "rejected"
                 }
             }, {
                 returnNewDocument: true,
@@ -350,13 +324,7 @@ class SupplierClass {
             User.findByIdAndUpdate(user_id, {
                 $set: {
                     is_supplier: false,
-                    supplier: {
-                        _id: supplier._id,
-                        business_name: supplier.business_name,
-                        business_category: supplier.business_category,
-                        status: "disabled",
-                        disabled_at: disabled_at
-                    }
+                    supplier_status: "disabled"
                 }
             }, {
                 returnNewDocument: true,

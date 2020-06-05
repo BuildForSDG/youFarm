@@ -34,8 +34,8 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         required: true
     },
-    supplier: {
-        type: Object
+    supplier_status: {
+        type: String
     },
     password: {
         type: String,

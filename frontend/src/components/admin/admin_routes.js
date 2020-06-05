@@ -1,9 +1,6 @@
 import React from "react";
 
 const Dashboard = React.lazy(() => import("./Dashboard/Dashboard"));
-const Articles = React.lazy(() => import("./Articles/Articles"));
-const AddArticle = React.lazy(() => import("./Articles/AddArticle"));
-const EditArticle = React.lazy(() => import("./Articles/EditArticle"));
 const Users = React.lazy(() => import("./Users/Users"));
 const Suppliers = React.lazy(() => import("./Suppliers/Suppliers"));
 const Administrators = React.lazy(() =>
@@ -14,22 +11,6 @@ const Administrators = React.lazy(() =>
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/admin/dashboard", name: "Dashboard", component: Dashboard },
-  {
-    path: "/admin/articles",
-    exact: true,
-    name: "Articles",
-    component: Articles,
-  },
-  {
-    path: "/admin/add-article",
-    name: "Add Article",
-    component: AddArticle,
-  },
-  {
-    path: "/admin/edit-article/:id",
-    name: "Edit Article",
-    component: EditArticle,
-  },
   {
     path: "/admin/users",
     exact: true,

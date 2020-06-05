@@ -31,7 +31,7 @@ class UserClass {
                 address: data.address,
                 deleted: data.deleted,
                 is_supplier: data.is_supplier,
-                supplier: data.supplier,
+                supplier_status: data.supplier_status,
                 created_at: data.created_at,
                 updated_at: data.updated_at,
                 deleted_at: data.deleted_at
@@ -153,7 +153,7 @@ class UserClass {
 
             newUser
                 .save()
-                .then(async (data) => {
+                .then(async(data) => {
                     const details = await User.findOne({
                         _id: data._id
                     }, {
@@ -215,17 +215,17 @@ class UserClass {
                 });
 
             User.findByIdAndUpdate(logged_user, {
-                $set: {
-                    first_name: first_name,
-                    last_name: last_name,
-                    phone: phone,
-                    gender: gender,
-                    state: state,
-                    city: city,
-                    address: address,
-                    updated_at: updated_at
-                }
-            })
+                    $set: {
+                        first_name: first_name,
+                        last_name: last_name,
+                        phone: phone,
+                        gender: gender,
+                        state: state,
+                        city: city,
+                        address: address,
+                        updated_at: updated_at
+                    }
+                })
                 .then((data) => {
                     res.status(201).json({
                         status: true,
@@ -280,7 +280,7 @@ class UserClass {
                 address: user.address,
                 deleted: user.deleted,
                 is_supplier: user.is_supplier,
-                supplier: user.supplier,
+                supplier_status: user.supplier_status,
                 created_at: user.created_at,
                 updated_at: user.updated_at,
                 deleted_at: user.deleted_at
@@ -352,11 +352,11 @@ class UserClass {
                 });
 
             User.findByIdAndUpdate(user_id, {
-                $set: {
-                    deleted: true,
-                    deleted_at: deleted_at
-                }
-            })
+                    $set: {
+                        deleted: true,
+                        deleted_at: deleted_at
+                    }
+                })
                 .then((data) => {
                     res.status(201).json({
                         status: true,

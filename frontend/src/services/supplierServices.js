@@ -12,18 +12,6 @@ export class SupplierServices {
     return apiClient.get("suppliers");
   }
 
-  static approve(supplierId) {
-    return apiClient.get(`supplier/approve/${supplierId}`);
-  }
-
-  static reject(supplierId) {
-    return apiClient.get(`supplier/reject/${supplierId}`);
-  }
-
-  static disable(supplierId) {
-    return apiClient.get(`supplier/disable/${supplierId}`);
-  }
-
   static deleteSupplier(supplierId) {
     return apiClient.delete("supplier/delete/" + supplierId);
   }

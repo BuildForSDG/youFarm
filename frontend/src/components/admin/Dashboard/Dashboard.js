@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, CardBody, Col, Row, Spinner } from "reactstrap";
-import { ArticleServices } from "../../../services/articleServices";
 import { UserServices } from "../../../services/userServices";
 import { SupplierServices } from "../../../services/supplierServices";
 
@@ -10,22 +9,12 @@ class Dashboard extends Component {
     this.state = {
       totalUser: 0,
       totalSupplier: 0,
-      totalArticle: 0,
       userloading: true,
-      supplierLoading: true,
-      articleLoading: true
+      supplierLoading: true
     };
   }
 
   getAllTotalValues() {
-    ArticleServices.allArticles().then((response) => {
-      if (response.status) {
-        this.setState((prevState) => ({
-          totalArticle: response.data.length,
-          articleLoading: !prevState.articleLoading
-        }));
-      }
-    })
     UserServices.allUsers().then((response) => {
       if (response.status) {
         this.setState((prevState) => ({
@@ -77,9 +66,8 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-warning">
               <CardBody className="pb-0">
-                <h1>{this.state.articleLoading ? <Spinner size="sm" /> : null}
-                  {this.state.articleLoading ? null : this.state.totalArticle}</h1>
-                <div>Articles</div>
+                <h1>26</h1>
+                <div>Products</div>
               </CardBody>
               <div style={{ height: "70px" }}></div>
             </Card>
@@ -89,7 +77,7 @@ class Dashboard extends Component {
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
                 <h1>26</h1>
-                <div>Products</div>
+                <div>Articles</div>
               </CardBody>
               <div style={{ height: "70px" }}></div>
             </Card>

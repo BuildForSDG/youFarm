@@ -86,7 +86,7 @@ class Login extends Component {
       >
         <Container>
           <Row className="justify-content-center">
-            <Col md="6">
+            <Col md="4">
               <CardGroup>
                 <Card className="p-4">
                   <CardBody className="text-center">

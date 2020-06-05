@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Row, Table, Modal, ModalHeader, ModalBody, ModalFooter, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Row, Table, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Spinner } from 'reactstrap';
@@ -100,17 +100,10 @@ class Administrators extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader>
-                <div>
-                  <Breadcrumb tag="nav" listTag="div">
-                    <BreadcrumbItem tag="a" onClick={() => this.props.history.push('/admin/dashboard')}>Home</BreadcrumbItem>
-                    <BreadcrumbItem active tag="span">
-                      <i className="fa fa-align-justify"></i> Administrators {this.state.loading ? <Spinner size="sm" /> : null}
-                    </BreadcrumbItem>
-                  </Breadcrumb>
-                </div>
+                <i className="fa fa-align-justify"></i> Administrators {this.state.loading ? <Spinner size="sm" /> : null}
               </CardHeader>
               <CardBody>
-                <Table responsive hover striped>
+                <Table responsive hover>
                   <thead>
                     <tr>
                       <th scope="col">First Name</th>
@@ -127,7 +120,7 @@ class Administrators extends Component {
                         <td>{admin.email}</td>
                         <td>
                           <Button color="danger" onClick={() => this.toggleModal(admin)}>
-                            <i className="fa fa-trash"></i>
+                            Delete
                           </Button>
                         </td>
                       </tr>
