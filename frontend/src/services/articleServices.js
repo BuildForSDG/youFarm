@@ -20,7 +20,7 @@ export class ArticleServices {
     return apiClient.get(`article/${articleId}`);
   }
 
-  static delete(supplierId) {
-    return apiClient.delete(`article/delete/${supplierId}`);
+  static delete(articleId) {
+    return apiClient.delete(`article/delete/${articleId}`);
   }
 }

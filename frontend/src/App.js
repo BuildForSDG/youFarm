@@ -18,6 +18,7 @@ const UserArticles = React.lazy(() =>
 );
 
 // Pages
+const Home = React.lazy(() => import("./components/Home"));
 const AdminLogin = React.lazy(() => import("./components/admin/Login/Login"));
 const UserLogin = React.lazy(() => import("./components/user/Login/Login"));
 const Register = React.lazy(() =>
@@ -37,7 +38,7 @@ class App extends Component {
               exact
               path="/"
               name="Home"
-              render={(props) => <UserLogin {...props} />}
+              render={(props) => <Home {...props} />}
             />
             <Route
               exact

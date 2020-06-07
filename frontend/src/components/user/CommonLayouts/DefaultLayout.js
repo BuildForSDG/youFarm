@@ -2,7 +2,6 @@ import React, { Component, Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import * as router from "react-router-dom";
 import { Container } from "reactstrap";
-import { UserServices } from "../../../services/userServices";
 
 import {
   AppFooter,
@@ -13,7 +12,8 @@ import {
   AppSidebarNav2 as AppSidebarNav,
 } from "@coreui/react";
 // sidebar nav config
-import navigation from "./_nav";
+import { supplierNav, defaultNav } from './_nav'
+import { UserServices } from '../../../services/userServices'
 // routes config
 import routes from "../user_routes";
 
@@ -21,14 +21,34 @@ const DefaultFooter = React.lazy(() => import("./DefaultFooter"));
 const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
 
 class DefaultLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      supplier_status: ''
+    };
+  }
   loading = () => (
     <div className="animated fadeIn pt-1 text-center">Loading...</div>
   );
 
+  getSupplierStatus() {
+    UserServices.userDetails(localStorage.getItem('userId')).then((response) => {
+      if (response.status) {
+        this.setState({
+          supplier_status: response.data.is_supplier,
+        })
+      }
+    })
+  }
+
   signOut(e) {
     e.preventDefault();
     UserServices.logout();
-    this.props.history.push("/login");
+    window.location = '/';
+  }
+
+  componentDidMount() {
+    this.getSupplierStatus()
   }
 
   render() {
@@ -43,7 +63,7 @@ class DefaultLayout extends Component {
           <AppSidebar fixed display="lg">
             <Suspense>
               <AppSidebarNav
-                navConfig={navigation}
+                navConfig={this.state.supplier_status ? supplierNav : defaultNav}
                 {...this.props}
                 router={router}
               />
@@ -66,7 +86,7 @@ class DefaultLayout extends Component {
                       />
                     ) : null;
                   })}
-                  <Redirect from="/user" to="/user/articles" />
+                  <Redirect from="/user" to="/user/marketplace" />
                 </Switch>
               </Suspense>
             </Container>

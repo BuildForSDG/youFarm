@@ -43,7 +43,7 @@ class Login extends Component {
 
   componentWillMount() {
     if (UserServices.userLoggedIn())
-      this.props.history.replace('/user/articles');
+      this.props.history.replace('/user/marketplace');
   }
 
 
@@ -65,7 +65,8 @@ class Login extends Component {
           autoClose: 2000,
           hideProgressBar: true
         });
-        this.props.history.push('/user/articles');
+        window.location = '/user/marketplace';
+        // this.props.history.push('/user/marketplace');
       } else {
         this.setState((prevState) => ({
           loading: !prevState.loading

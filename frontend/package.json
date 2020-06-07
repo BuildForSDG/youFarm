@@ -1,15 +1,15 @@
 {
-  "name": "@coreui/coreui-free-react-admin-template",
+  "name": "your-farm-sdg-2020-team-233",
   "version": "2.6.0",
-  "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
-  "author": "Łukasz Holeczek",
-  "homepage": "https://coreui.io",
-  "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
+  "description": "This is an app for local farmer to practice extensive and modern farming",
+  "author": "SDG Team 233",
+  "homepage": "https://you-farm.herokuapp.com",
+  "copyright": "Copyright 2020 SDG Team 233",
   "license": "MIT",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
+    "url": "https://github.com/BuildForSDG/youFarm.git"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^19.0.2",
@@ -32,6 +32,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.10.1",
     "install": "^0.13.0",
+    "jquery": "^3.5.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.26.0",
     "naija-state-local-government": "^1.1.0",
@@ -40,6 +41,7 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
     "react-chartjs-2": "^2.7.6",
+    "react-currency-format": "^1.0.0",
     "react-dom": "^16.8.6",
     "react-moment": "^0.9.7",
     "react-npm": "^2.6.1",
@@ -47,6 +49,7 @@
     "react-render-html": "^0.6.0",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-scripts": "^3.0.1",
     "react-test-renderer": "^16.8.6",
     "react-text-truncate": "^0.16.0",
     "react-toastify": "^6.0.0-rc.2-1",
@@ -87,7 +90,7 @@
     ]
   },
   "engines": {
-    "node": ">=8.10",
-    "npm": ">=6"
+    "npm": "6.14.4",
+    "node": "10.16.3"
   }
 }

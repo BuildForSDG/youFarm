@@ -118,7 +118,7 @@ class SupplierClass {
                 });
             User.findByIdAndUpdate(user._id, {
                 $set: {
-                    is_supplier: true,
+                    is_supplier: false,
                     supplier: {
                         status: "pending",
                         created_at: created_at
@@ -129,6 +129,18 @@ class SupplierClass {
                 new: true,
                 strict: false
             })
+                .then(async () => {
+                    res.status(201).json({
+                        status: true,
+                        message: "Supplier application successfully"
+                    })
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        status: false,
+                        message: "An error occur, can't apply as a supplier. Try again"
+                    })
+                })
         } catch (error) {
             res.status(500).json({
                 status: false,
@@ -198,6 +210,18 @@ class SupplierClass {
                 new: true,
                 strict: false
             })
+                .then(async () => {
+                    res.status(201).json({
+                        status: true,
+                        message: "Supplier approved successfully"
+                    })
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        status: false,
+                        message: "An error occur, can't approve supplier. Try again"
+                    })
+                })
 
         } catch (error) {
             res.status(500).json({

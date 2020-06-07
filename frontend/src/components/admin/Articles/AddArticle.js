@@ -36,7 +36,7 @@ class AddArticle extends Component {
       btnloading: !prevState.btnloading,
     }));
 
-    const updatePayload = {
+    const addPayload = {
       title: this.state.title,
       body: this.state.body,
       category: this.state.category,
@@ -44,7 +44,7 @@ class AddArticle extends Component {
       published: true
     };
     e.preventDefault();
-    ArticleServices.add(updatePayload).then((response) => {
+    ArticleServices.add(addPayload).then((response) => {
       if (response.status === true) {
         this.props.history.push("/admin/articles");
         toast.success(response.message, {
@@ -118,17 +118,19 @@ class AddArticle extends Component {
                       onChange={this.changeHandler} />
                   </FormGroup>
                   <Row>
-                    <Col md={4}><FormGroup>
-                      <Input
-                        type="select"
-                        name="category"
-                        value={this.state.category}
-                        onChange={this.changeHandler}>
-                        <option>General Farming</option>
-                        <option>Crops</option>
-                        <option>Tools</option>
-                      </Input>
-                    </FormGroup>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Input
+                          type="select"
+                          name="category"
+                          value={this.state.category}
+                          onChange={this.changeHandler}>
+                          <option>Select Category</option>
+                          <option>General Farming</option>
+                          <option>Crops</option>
+                          <option>Tools</option>
+                        </Input>
+                      </FormGroup>
                     </Col>
                     <Col md={4}>
                       <Button color="primary" onClick={this.openWidget}>Upload Image</Button>

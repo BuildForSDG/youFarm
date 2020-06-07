@@ -46,7 +46,7 @@ class ProductClass {
             const newProduct = new Product(data);
             newProduct
                 .save()
-                .then(async(data) => {
+                .then(async (data) => {
                     const details = await Product.findOne({
                         _id: data._id
                     });
@@ -115,9 +115,9 @@ class ProductClass {
             };
 
             Product.findByIdAndUpdate(product_id, {
-                    $set: data
-                })
-                .then(async(data) => {
+                $set: data
+            })
+                .then(async (data) => {
                     const details = await Product.findOne({
                         _id: product_id
                     });

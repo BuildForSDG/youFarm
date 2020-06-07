@@ -3,27 +3,32 @@ export default {
     {
       name: "Dashboard",
       url: "/admin/dashboard",
-      icon: "icon-speedometer",
+      icon: "fas fa-tachometer-alt",
+    },
+    {
+      name: "Products",
+      url: "/admin/products",
+      icon: "fa fa-product-hunt",
     },
     {
       name: "Articles",
       url: "/admin/articles",
-      icon: "icon-user",
+      icon: "fas fa-newspaper",
     },
     {
       name: "Users",
       url: "/admin/users",
-      icon: "icon-user",
+      icon: "fas fa-users",
     },
     {
       name: "Suppliers",
       url: "/admin/suppliers",
-      icon: "icon-badge",
+      icon: "fas fa-user-friends",
     },
     {
       name: "Administrators",
       url: "/admin/admins",
-      icon: "icon-badge",
+      icon: "fas fa-users-cog",
     },
   ],
 };

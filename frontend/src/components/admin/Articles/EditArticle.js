@@ -150,6 +150,7 @@ class EditArticle extends Component {
                         name="category"
                         value={this.state.category}
                         onChange={this.changeHandler}>
+                        <option>Select Category</option>
                         <option>General Farming</option>
                         <option>Crops</option>
                         <option>Tools</option>

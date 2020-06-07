@@ -24,3 +24,7 @@ a:not([href]):not([tabindex]):hover {
   text-decoration: underline !important;
   cursor: pointer;
 } 
+
+.card{
+  border: none !important;
+}

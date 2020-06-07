@@ -3,6 +3,7 @@ import { Card, CardBody, Col, Row, Spinner } from "reactstrap";
 import { UserServices } from "../../../services/userServices";
 import { SupplierServices } from "../../../services/supplierServices";
 import { ArticleServices } from "../../../services/articleServices";
+import { ProductServices } from "../../../services/productServices";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -11,13 +12,23 @@ class Dashboard extends Component {
       totalUser: 0,
       totalSupplier: 0,
       totalArticle: 0,
+      totalProduct: 0,
       userloading: true,
       supplierLoading: true,
-      articleLoading: true
+      articleLoading: true,
+      productLoading: true
     };
   }
 
   getAllTotalValues() {
+    ProductServices.products().then((response) => {
+      if (response.status) {
+        this.setState((prevState) => ({
+          totalProduct: response.data.length,
+          productLoading: !prevState.productLoading
+        }));
+      }
+    })
     ArticleServices.articles().then((response) => {
       if (response.status) {
         this.setState((prevState) => ({
@@ -88,7 +99,8 @@ class Dashboard extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
-                <h1>26</h1>
+                <h1>{this.state.productLoading ? <Spinner size="sm" /> : null}
+                  {this.state.productLoading ? null : this.state.totalProduct}</h1>
                 <div>Products</div>
               </CardBody>
               <div style={{ height: "70px" }}></div>

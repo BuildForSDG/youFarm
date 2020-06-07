@@ -1,6 +1,7 @@
 import React from "react";
 
 const Dashboard = React.lazy(() => import("./Dashboard/Dashboard"));
+const Products = React.lazy(() => import("./Product/Products"));
 const Articles = React.lazy(() => import("./Articles/Articles"));
 const AddArticle = React.lazy(() => import("./Articles/AddArticle"));
 const EditArticle = React.lazy(() => import("./Articles/EditArticle"));
@@ -10,10 +11,15 @@ const Administrators = React.lazy(() =>
   import("./Administrators/Administrators")
 );
 
-// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/admin/dashboard", name: "Dashboard", component: Dashboard },
+  {
+    path: "/admin/products",
+    exact: true,
+    name: "Products",
+    component: Products,
+  },
   {
     path: "/admin/articles",
     exact: true,
